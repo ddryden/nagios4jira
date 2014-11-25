@@ -6,18 +6,19 @@ import logging
 
 USER = 'nagios'
 PASS = 'nagiospw'
-API_URL = "http://localhost:8080"
+API_URL = "https://jira.domain.com"
+PROJECT = 'DEMO'
+ISSUETYPE = 'Bug'
 
 logging.basicConfig(filename='/var/log/nagios3/jira-handler.log',
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     datefmt='%Y-%m-%d %H:%M:%S',
                     level=logging.DEBUG)
 
-    
 
 def jconnect ():
     try:
-        jira = JIRA({'server': API_URL}, basic_auth=(USER, PASS))
+        jira = JIRA(options={'server': API_URL}, basic_auth=(USER, PASS))
         return jira
     except Exception as err:
         err = "Couldn't create connection to jira: %s" % err
@@ -25,22 +26,19 @@ def jconnect ():
         logging.error(err)
 
 def search_similar_issues (jc, servicedesc, servicestate, hostname):
-
     query = "labels=%s and labels=%s and labels=%s" % (servicedesc, servicestate, hostname)
     similar_issues = jc.search_issues(query)
     keys = [ "%s" % (issue.key) for issue in similar_issues ]
     return keys
 
 def create_issue (jc, summary, description, alert_id, servicedesc, servicestate, hostname):
-
-    
     try:
-        new_issue = jc.create_issue(project={'key': 'DEMO'},
+        new_issue = jc.create_issue(project={'key': PROJECT},
                               summary=summary,
                               description=description,
                               labels=["alertid_"+alert_id, servicedesc, servicestate, hostname],
-                              issuetype={'name': 'Bug'})
-        logging.info("Created issue with alert_id %s" % alert_id)
+                              issuetype={'name': ISSUETYPE})
+        logging.info("Created issue with alert_id %s\n" % alert_id)
         keys = search_similar_issues(jc, servicedesc, servicestate, hostname)
         if len(keys) != 0:
             for key in keys:
@@ -67,7 +65,18 @@ def close_issue (jc, alert_id):
         return False
 
 def print_usage():
-    print "Usage: %s SOFT|HARD <SUMMARY> <DESCRIPTION> CRITICAL|OK ALERT_ID SERVICEDESC  SERVICESTATE" % sys.argv[0]
+    #print "Usage: %s SOFT|HARD <SUMMARY> <DESCRIPTION> CRITICAL|OK ALERT_ID SERVICEDESC  HOSTNAME" % sys.argv[0]
+    print "Usage: %s STATE SUMMARY DESCRIPTION STATUS ALERTID SERVICE_DESCRIPTION SERVICE_STATE HOSTNAME" % sys.argv[0]
+    print """
+       STATE = SOFT or HARD
+       SUMMARY
+       DESCRIPTION 
+       STATUS = CRITICAL or OK
+       ALERTID
+       SERVICE_DESCRIPTION 
+       SERVICE_STATE
+       HOSTNAME
+       """
 
 def main():
     try:    
@@ -97,3 +106,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+

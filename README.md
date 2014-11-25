@@ -13,9 +13,10 @@ Requirements
 jira-python >= 0.12
 
 Tested on:
-* Ubuntu 12.04
+* OS: Ubuntu 12.04, Debian Wheezy
 * Jira v5.2.9
 * Nagios 3.2.3
+
 
 Usage
 =====
@@ -34,4 +35,4 @@ add event handler to the service definition:
     event_handler  create-jira-issue
 
 
-modify USER, PASS, API_URL script variables
+modify USER, PASS, API_URL, PROJECT, ISSUETYPE script variables
