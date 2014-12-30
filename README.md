@@ -13,16 +13,16 @@ Requirements
 jira-python >= 0.12
 
 Tested on:
-* OS: Ubuntu 12.04, Debian Wheezy
-* Jira v5.2.9
-* Nagios 3.2.3
+* OS: Ubuntu 14.04, Debian Wheezy
+* Jira v6.3.8
+* Nagios 3.4
 
 
 Usage
 =====
 
 
-define nagios command
++ Define nagios command in your nagios configuration like so:
 
     define command{
       command_name    create-jira-issue
@@ -30,9 +30,9 @@ define nagios command
     }
 
 
-add event handler to the service definition:
++ Add event handler to the service definition you wish to generate Jira tickets:
 
     event_handler  create-jira-issue
 
 
-modify USER, PASS, API_URL, PROJECT, ISSUETYPE script variables
++ Modify USER, PASS, API_URL, PROJECT, ISSUETYPE script variables in the script or create a config file for the nagios user like the example config file and place it in ~/.jira4nagios.config
