@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 from jira.client import JIRA
 import sys
@@ -17,18 +18,18 @@ logging.basicConfig(filename='/var/log/nagios3/jira-handler.log',
 
 
 def load_config
-        Config = ConfigParser.ConfigParser()
-	try:
-        	Config.read(os.path.expanduser("~/.jira4nagios.config"))
-		# Assuming it finds a section called 'jira4nagios' with 
-		# options: ['user', 'pass', 'api_url', 'project', 'issuetype']
-		USER = Config.get('jira4nagios', 'user')
-		PASS = Config.get('jira4nagios', 'pass')
-		API_URL = Config.get('jira4nagios', 'api_url')
-		PROJECT = Config.get('jira4nagios', 'project')
-		ISSUETYPE = Config.get('jira4nagios', 'issuetype')
-	except:
-		logging.error("Could not read options[s] from config file: ~/.jira4nagios.config")
+    Config = ConfigParser.ConfigParser()
+    try:
+        Config.read(os.path.expanduser("~/.jira4nagios.config"))
+        # Assuming it finds a section called 'jira4nagios' with 
+        # options: ['user', 'pass', 'api_url', 'project', 'issuetype']
+        USER = Config.get('jira4nagios', 'user')
+        PASS = Config.get('jira4nagios', 'pass')
+        API_URL = Config.get('jira4nagios', 'api_url')
+        PROJECT = Config.get('jira4nagios', 'project')
+        ISSUETYPE = Config.get('jira4nagios', 'issuetype')
+    except:
+        logging.error("Could not read options[s] from config file: ~/.jira4nagios.config")
 	
 
 def jconnect ():
@@ -61,7 +62,6 @@ def create_issue (jc, summary, description, alert_id, servicedesc, servicestate,
                     jc.create_issue_link(type="Relates",
                                         inwardIssue=key,
                                         outwardIssue=new_issue.key)
-
     except Exception as err:
         err = "Couldn't create issue: %s" % (err)
         sys.stderr.write(err)
