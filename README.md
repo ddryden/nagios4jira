@@ -34,7 +34,7 @@ Usage
 
 + Add event handler to the service definition you wish to generate Jira tickets:
 
-    event_handler  create-jira-issue
+        event_handler  create-jira-issue
 
 
 + Modify USER, PASS, API_URL, PROJECT, ISSUETYPE script variables in the script or create a config file for the nagios user like the example config file and place it in ~/.jira4nagios.config
