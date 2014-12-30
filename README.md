@@ -26,10 +26,10 @@ Usage
 
 + Define nagios command in your nagios configuration like so:
 
-    define command{
-      command_name    create-jira-issue
-      command_line    /etc/nagios3/scripts/jissue.py $SERVICESTATETYPE$  "** $NOTIFICATIONTYPE$ Service Alert: $HOSTALIAS$/$SERVICEDESC$ is $SERVICESTATE$ **" "$SERVICEOUTPUT$" "$SERVICESTATE$" "$HOSTNOTIFICATIONID$" "$SERVICEDESC$"  "$SERVICESTATE$" "$HOSTNAME$"
-    }
+        define command{
+          command_name    create-jira-issue
+          command_line    /etc/nagios3/scripts/jissue.py $SERVICESTATETYPE$  "** $NOTIFICATIONTYPE$ Service Alert: $HOSTALIAS$/$SERVICEDESC$ is $SERVICESTATE$ **" "$SERVICEOUTPUT$" "$SERVICESTATE$" "$HOSTNOTIFICATIONID$" "$SERVICEDESC$"  "$SERVICESTATE$" "$HOSTNAME$"
+        }
 
 
 + Add event handler to the service definition you wish to generate Jira tickets:
