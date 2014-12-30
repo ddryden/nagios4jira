@@ -16,6 +16,21 @@ logging.basicConfig(filename='/var/log/nagios3/jira-handler.log',
                     level=logging.DEBUG)
 
 
+def load_config
+        Config = ConfigParser.ConfigParser()
+	try:
+        	Config.read(os.path.expanduser("~/.jira4nagios.config"))
+		# Assuming it finds a section called 'jira4nagios' with 
+		# options: ['user', 'pass', 'api_url', 'project', 'issuetype']
+		USER = Config.get('jira4nagios', 'user')
+		PASS = Config.get('jira4nagios', 'pass')
+		API_URL = Config.get('jira4nagios', 'api_url')
+		PROJECT = Config.get('jira4nagios', 'project')
+		ISSUETYPE = Config.get('jira4nagios', 'issuetype')
+	except:
+		logging.error("Could not read options[s] from config file: ~/.jira4nagios.config")
+	
+
 def jconnect ():
     try:
         jira = JIRA(options={'server': API_URL}, basic_auth=(USER, PASS))
