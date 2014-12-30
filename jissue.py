@@ -1,9 +1,10 @@
 #!/usr/bin/python
-# vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 from jira.client import JIRA
+import os
 import sys
 import logging
+import ConfigParser
 
 USER = 'nagios'
 PASS = 'nagiospw'
@@ -17,7 +18,7 @@ logging.basicConfig(filename='/var/log/nagios3/jira-handler.log',
                     level=logging.DEBUG)
 
 
-def load_config
+def load_config ():
     Config = ConfigParser.ConfigParser()
     try:
         Config.read(os.path.expanduser("~/.jira4nagios.config"))
@@ -107,6 +108,7 @@ def main():
         print_usage()
         return False
 
+    load_config()
     jc = jconnect()
     if jc:
         if nag_state == "HARD":
