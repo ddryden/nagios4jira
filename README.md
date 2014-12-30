@@ -10,7 +10,9 @@ Nagios event handler for Jira
 Requirements
 ============
 
-jira-python >= 0.12
+jira python module can be installed with 
+
+    # pip install jira
 
 Tested on:
 * OS: Ubuntu 14.04, Debian Wheezy
